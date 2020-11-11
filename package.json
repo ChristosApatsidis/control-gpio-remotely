@@ -1,0 +1,21 @@
+{
+  "name": "socketgpio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "nodemon": "nodemon --config"
+  },
+  "author": "Xristos Apatsidis",
+  "license": "MIT",
+  "dependencies": {
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "gpio": "^0.2.10",
+    "mongoose": "^5.10.11",
+    "nodemon": "^2.0.6",
+    "onoff": "^6.0.1",
+    "socket.io": "^2.3.0",
+    "update-json-file": "^1.1.1"
+  }
+}

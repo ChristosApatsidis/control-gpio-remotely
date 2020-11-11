@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head'); -%>
+  </head>
+  <body>
+    <header>
+      <%- include('../partials/header'); -%>
+    </header>
+    <main class="container">
+      <h3 style="padding-top: 10px;">Home</h3>
+      <div id="switch">
+    </main>
+  </body>
+
+  <script src="javascripts/socket.io.js"></script>
+  <script src="javascripts/bootstrap.bundle.min.js"></script>
+  <script src="javascripts/jquery-3.4.1.min.js"></script>
+
+  <script>
+    const socket = io({
+      reconnection: false
+    });
+  </script>
+
+
+  <script>
+    socket.on('switches', function(data){
+      $('#switch').append($(`<h5>`).text(data.name));
+      $('#switch').append($(`<button type='button' onclick="BtnClcik(${data.id})" id=${data.id} class='btn btn-primary btn-lg btn-block'>`).text(data.status));
+    });
+    socket.on('update_btn_status', function(data){
+      $('#'+data.id).html(data.status);
+    });
+    socket.on('error_', function(error){
+      console.log(error)
+    });
+  </script>
+
+  <script>
+    function BtnClcik(id) {
+      socket.emit('btn_press', id);
+    }
+  </script>
+
+</html>

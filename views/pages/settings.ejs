@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head'); -%>
+  </head>
+  <body>
+    <header>
+      <%- include('../partials/header'); -%>
+    </header>
+    <main class="container">
+      <h3 style="padding-top: 10px;">Settings</h3>
+      <div id="switch">
+    </main>
+  </body>
+
+  <script src="javascripts/socket.io.js"></script>
+  <script src="javascripts/bootstrap.bundle.min.js"></script>
+  <script src="javascripts/jquery-3.4.1.min.js"></script>
+
+  <script>
+    const socket = io({
+      reconnection: false
+    });
+  </script>
+
+  <script>
+    socket.on('switches', function(data){
+      name = data.name
+      $('#switch').append($(`<h5 class="form-label">${name}</h5>`));
+      $('#switch').append($(`<div class="input-group mb-3"><input type="text" placeholder="Type New Name" class="form-control ${data.id}" aria-describedby="button-addon2"><button class="btn btn-outline-secondary" type="button" id=${data.id} onclick="SaveClcik(${data.id})">Save</button></div>`));
+    });
+    socket.on('update_btn_status', function(data){
+      $('#'+data.id).html(data.status);
+    });
+    socket.on('error_', function(error){
+      console.log(error)
+    });
+  </script>
+
+  <script>
+    function SaveClcik(id) {
+      console.log(id)
+      val = $("."+id).val();
+      socket.emit('edit_name', {id: id, new_name: val});
+    }
+  </script>
+
+</html>
